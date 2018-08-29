@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="mainPage :: mainHead">
+
+</head>
+<body onload="roleDiff()">
+<div class="modal fade" id="selectCustomer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">提示：</h4>
+            </div>
+            <div class="modal-body">
+                账号或密码错误！
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    关闭
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="wrapper">
+    <nav th:replace="mainPage :: navi" class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0"></nav>
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="page-header">未处理的交易</h2>
+            </div>
+        </div>
+        <div class="row">
+
+
+            &emsp;&emsp;&emsp;还有<a th:text="${deals.size()}"></a>笔交易未处理。
+            <br>
+                    <div class="panel-body">
+
+                        <div th:each="item : ${deals}">
+                            <div class="col-lg-12">
+                                <div class="panel panel-primary">
+                            <form action="#" th:action="@{/handleDeal}" th:object="${deal}"  method="post">
+                                <h4>交易信息</h4>
+                                <a th:if="${item.busId}==null">这是第一次收到交易信息，请填写业务编号</a >
+                                <p>业务编号:&emsp;&emsp;<input type="text" th:attr="value=${item.busId}"  th:name="busId"/></p>
+                                <p>原报文标识号: <input type="text" th:value="${item.msgId}"  th:name="msgId"/></p>
+                                <p>交易方向:&emsp;&emsp; <input type="text" th:value="${item.trdDir}"  th:name="trdDir"/></p>
+                                <h4>机构信息</h4>
+                                <p>本人机构代码: <input type="text" th:value="${item.reqBranch}"  th:name="reqBranch"/></p>
+                                <p>本人交易员id: <input type="text" th:value="${item.reqUser}" th:name="reqUser" /></p>
+                                <p>对方机构代码: <input type="text" th:value="${item.cpBranch}" th:name="cpBranch" /></p>
+                                <p>对方交易员id: <input type="text" th:value="${item.cpUser}" th:name="cpUser" /></p>
+                                <h4>报价信息</h4>
+                                <p>票据种类: &emsp;&emsp;<input type="text" th:value="${item.cdType}" th:name="cdType" /></p>
+                                <p>票据张数: &emsp;&emsp;<input type="text"  th:value="${item.drftNm}" th:name="drftNm" /></p>
+                                <p>票面总额:&emsp;&emsp; <input type="text" th:value="${item.sumAmt}" th:name="sumAmt" /></p>
+                                <p>报价有效期: &emsp;<input type="text" th:value="${item.quoteTime}" th:name="quoteTime" /></p>
+                                <p>结算金额: &emsp;&emsp;<input type="text"  th:value="${item.setAmt}" th:name="setAmt" /></p>
+                                <p>最晚清算时间: <input type="text" th:value="${item.setTime}" th:name="setTime" /></p>
+                                <br>
+                                </table>
+                                <input type="submit" class="btn btn-default" th:name="choice" value="不同意报价，提交修改" />&emsp;
+                                <input type="submit" class="btn btn-default"th:name="choice" value="同意报价，交易成功" />&emsp;
+                                <input type="submit" class="btn btn-default" th:name="choice" value="不同意报价，终止交易" />
+                            </form>
+
+
+
+                        </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="/js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="/js/plugins/dataTables/dataTables.bootstrap.js"></script>
+
+
+</body>
+
+</html>

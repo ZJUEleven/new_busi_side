@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <title>请登录/注册</title>
+
+    <!-- Core CSS - Include with every page -->
+    <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/font-awesome/css/font-awesome.css" rel="stylesheet"/>
+
+    <!-- SB Admin CSS - Include with every page -->
+    <link href="/css/sb-admin.css" rel="stylesheet"/>
+    <title>Login</title>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="login-panel panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">请登录/注册</h3>
+                </div>
+                <div class="panel-body">
+                    <form role="form"  method="post">
+                        <fieldset>
+                            <div class="form-group">
+                                <input id="id" class="form-control" placeholder="账号" name="account" autofocus="autofocus"/>
+                            </div>
+                            <div class="form-group">
+                                <input id="psw" class="form-control" placeholder="密码" name="password" type="password"
+                                       value=""/>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input id="rememberme" name="remember" type="checkbox" value="rememberme"/>记住我
+                                </label>
+                            </div>
+
+                            <!-- Change this to a button or input when using this as a form -->
+                            <input type="button" class="btn btn-lg btn-success btn-block" value="登录" onclick="login_frm();"/>
+                            <input type="button" class="btn btn-lg btn-success btn-block" value="注册" onclick="reg_frm();"/>
+
+
+                        </fieldset>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script language="JavaScript">
+    function reg_frm(){
+        //获取用户输入的值
+        var userId = document.getElementById("id").value;
+        var password = document.getElementById("psw").value;
+        //拼接url
+        var url = "/reg/?";
+        url += "userId="+userId+"&&password="+password;
+        //重新定位url
+        window.location = url;
+    }
+    function login_frm(){
+        //获取用户输入的值
+        var userId = document.getElementById("id").value;
+        var password = document.getElementById("psw").value;
+        //拼接url
+        var url = "/login/?";
+        url += "userId="+userId+"&&password="+password;
+        //重新定位url
+        window.location = url;
+    }
+</script>
+
+<!-- Core Scripts - Include with every page -->
+<script src="/js/jquery-1.10.2.js"></script>
+<script src="/js/jquery.cookie.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+
+<!-- SB Admin Scripts - Include with every page -->
+<script src="/js/sb-admin.js"></script>
+<script th:inline="javascript" type="text/javascript">
+    $(document).ready(function () {
+        var isLogin = [[${session.isLogin}]];
+        var account = $.cookie("account");
+        var password = $.cookie("password");
+        if (!isLogin) {
+            $('#myModal').modal('show');
+        }
+        if (account){
+            if (password){
+                $('#account').val(account);
+                $('#password').val(password);
+                $('#rememberCookie').attr('checked', 'true');
+            }
+        }
+    })
+</script>
+</body>
+</html>

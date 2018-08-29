@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:include="mainPage :: mainHead">
+
+</head>
+<body onload="roleDiff()">
+<div class="modal fade" id="selectCustomer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">提示：</h4>
+            </div>
+            <div class="modal-body">
+                账号或密码错误！
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal">
+                    关闭
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="wrapper">
+    <nav th:replace="mainPage :: navi" class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0"></nav>
+    <div id="page-wrapper">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="page-header">查询结果</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        结果
+                    </div>
+                    <div class="panel-body">
+
+                        <div th:each="item:${deals}">
+
+                            <h1>交易信息</h1>
+                            <p>业务编号: <a th:text="${item.busId}" ></a></p>
+                            机构信息
+                            <p>本人机构代码: <a th:text=" ${item.reqBranch}" ></a></p>
+                            <p>本人交易员id:<a th:text=" ${item.reqUser}" ></a></p>
+                            <p>对方机构代码:<a th:text=" ${item.cpBranch}" ></a></p>
+                            <p>对方交易员id: <a th:text=" ${item.cpUser}" ></a></p>
+                            报价信息
+                            <p>票据种类:<a th:text=" ${item.cdType}" ></a></p>
+                            <p>票据张数: <a th:text=" ${item.drftNm}" ></a></p>
+                            <p>票面总额: <a th:text=" ${item.sumAmt}" ></a></p>
+                            <p>报价有效期: <a th:text=" ${item.quoteTime}" ></a></p>
+                            <p>结算金额:<a th:text=" ${item.sumAmt}" ></a></p>
+                            <p>最晚清算时间: <a th:text=" ${item.setTime}" ></a></p>
+                        </div>
+                        <a href="/selectById">重新查询</a>
+                        <br>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="/js/plugins/dataTables/jquery.dataTables.js"></script>
+<script src="/js/plugins/dataTables/dataTables.bootstrap.js"></script>
+
+
+</body>
+
+</html>
